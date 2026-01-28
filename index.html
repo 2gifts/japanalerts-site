@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>Japan Marketplace Alerts - Track Mercari, Yahoo Auctions & Rakuma | Telegram Bot</title>
+    <meta name="title" content="Japan Marketplace Alerts - Track Mercari, Yahoo Auctions & Rakuma">
+    <meta name="description" content="Get instant Telegram notifications for new listings on Mercari Japan, Yahoo Auctions, and Rakuten Rakuma. Never miss rare items again. Free to start!">
+    <meta name="keywords" content="mercari japan alerts, yahoo auctions japan, rakuma notifications, mercari telegram bot, japan marketplace monitor, mercari tracker">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://japanalerts.com/">
+    <meta property="og:title" content="Japan Marketplace Alerts - Track Mercari, Yahoo Auctions & Rakuma">
+    <meta property="og:description" content="Get instant Telegram notifications for new listings on Mercari Japan, Yahoo Auctions, and Rakuten Rakuma.">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://japanalerts.com/">
+    <meta property="twitter:title" content="Japan Marketplace Alerts">
+    <meta property="twitter:description" content="Get instant Telegram notifications for new listings on Mercari Japan, Yahoo Auctions, and Rakuten Rakuma.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔔</text></svg>">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Japan Marketplace Alerts",
+      "applicationCategory": "Notification Service",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "operatingSystem": "Telegram",
+      "description": "Automated alerts for Mercari Japan, Yahoo Auctions, and Rakuten Rakuma listings",
+      "url": "https://japanalerts.com",
+      "provider": {
+        "@type": "Organization",
+        "name": "Japan Alerts"
+      }
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Features */
+        .features {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            background: #f9f9f9;
+            transition: transform 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        /* Marketplaces */
+        .marketplaces {
+            background: #f5f5f5;
+            padding: 80px 0;
+        }
+
+        .marketplaces h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+        }
+
+        .marketplace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .marketplace-card {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .marketplace-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+        }
+
+        .steps {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .step-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-right: 30px;
+            min-width: 60px;
+        }
+
+        .step-content h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Pricing */
+        .pricing {
+            background: #f5f5f5;
+            padding: 80px 0;
+        }
+
+        .pricing h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card.featured {
+            border: 3px solid #667eea;
+            transform: scale(1.05);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .price {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .price-period {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .pricing-features li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .pricing-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* FAQ */
+        .faq {
+            background: white;
+            padding: 80px 0;
+        }
+
+        .faq h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 30px;
+            padding: 30px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+
+        .faq-item h3 {
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1.1em;
+            }
+
+            .feature-grid, .marketplace-grid, .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .step-number {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header>
+        <div class="container">
+            <h1>🔔 Get Instant Alerts for Mercari Japan, Yahoo Auctions & Rakuma</h1>
+            <p>Never miss rare items on Japanese marketplaces. Free to start!</p>
+            <a href="https://t.me/JPListingsNotificationsBot" class="cta-button">Start Free on Telegram</a>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Why Japan Marketplace Alerts?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Instant Notifications</h3>
+                    <p>Get alerted within seconds of new listings matching your criteria. Be first to find rare items.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Custom Search Filters</h3>
+                    <p>Set specific keywords, price ranges, and exclude unwanted terms. Only see what matters to you.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Telegram Bot</h3>
+                    <p>Receive alerts directly on Telegram. No app downloads, no complicated setup.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌏</div>
+                    <h3>3 Marketplaces</h3>
+                    <p>Monitor Yahoo Auctions, Mercari, and Rakuten Rakuma simultaneously. Complete coverage of secondhand Japanese markets.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Price Alerts</h3>
+                    <p>Set maximum price limits. Only get notified when items are within your budget.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Use Any Proxy</h3>
+                    <p>We provide direct links. Buy through Buyee, Neokyo, ZenMarket, or any service you prefer.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketplaces -->
+    <section class="marketplaces">
+        <div class="container">
+            <h2>Supported Japanese Marketplaces</h2>
+            <div class="marketplace-grid">
+                <div class="marketplace-card">
+                    <h3>🏪 Mercari Japan</h3>
+                    <p>Japan's #1 flea market app with millions of listings daily. Find fashion, electronics, collectibles, and more at incredible prices.</p>
+                </div>
+                <div class="marketplace-card">
+                    <h3>🎌 Yahoo Auctions Japan</h3>
+                    <p>Japan's largest auction platform. Discover rare vintage items, limited editions, and exclusive Japanese products.</p>
+                </div>
+                <div class="marketplace-card">
+                    <h3>🛍️ Rakuten Rakuma</h3>
+                    <p>Rakuten's marketplace platform (formerly Fril). Great for fashion, accessories, and lifestyle items from Japanese sellers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Start the Telegram Bot</h3>
+                        <p>Search for our bot on Telegram and send /start. No signup forms, no credit card required.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Register Your Searches</h3>
+                        <p>Tell the bot what you're looking for. Set keywords, price limits, and exclude unwanted terms.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Get Instant Alerts</h3>
+                        <p>Receive Telegram notifications when new items match your criteria. Direct links to original listings.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Buy with Your Preferred Service</h3>
+                        <p>Use Buyee, Neokyo, ZenMarket, or any proxy service. We give you the direct links - you choose how to buy!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing">
+        <div class="container">
+            <h2>Simple, Transparent Pricing</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">$0</div>
+                    <div class="price-period">Forever</div>
+                    <ul class="pricing-features">
+                        <li>Up to 3 active searches</li>
+                        <li>Check every 3 hours</li>
+                        <li>All 3 marketplaces</li>
+                        <li>Price filters</li>
+                        <li>Exclude keywords</li>
+                    </ul>
+                    <a href="https://t.me/JPListingsNotificationsBot" class="cta-button">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Premium ⭐</h3>
+                    <div class="price">$9</div>
+                    <div class="price-period">per month</div>
+                    <ul class="pricing-features">
+                        <li>Unlimited active searches</li>
+                        <li>Check every 5 minutes</li>
+                        <li>All 3 marketplaces</li>
+                        <li>Price filters</li>
+                        <li>Exclude keywords</li>
+                        <li>Cancel anytime</li>
+                    </ul>
+                    <a href="https://t.me/JPListingsNotificationsBot" class="cta-button">Upgrade Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>How do I buy items from Japan?</h3>
+                    <p>We provide direct links to Mercari, Yahoo Auctions, and Rakuma listings. You can use proxy/forwarding services like Buyee, Neokyo, ZenMarket, FromJapan, or White Rabbit Express to purchase items and ship them internationally.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do I need a Telegram account?</h3>
+                    <p>Yes! Our bot works exclusively on Telegram. It's free and available on iOS, Android, Windows, Mac, and Linux. Download it from telegram.org if you don't have it yet.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>How fast are the alerts?</h3>
+                    <p>Free users get checks every 3 hours. Premium users get checks every 5 minutes, ensuring you're among the first to know about new listings.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I cancel my Premium subscription?</h3>
+                    <p>Absolutely! Cancel anytime through the bot or your Stripe subscription portal. No questions asked, no cancellation fees.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>What if I don't find any items?</h3>
+                    <p>Try broader search terms or check your price limits. Japanese marketplaces have millions of listings, so there's almost always something matching your criteria!</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do you sell the items?</h3>
+                    <p>No, we're just a notification service. We help you discover items on Mercari, Yahoo Auctions, and Rakuma. You purchase directly from sellers using your preferred proxy service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Japan Marketplace Alerts. All rights reserved.</p>
+            <p>
+                <a href="/terms">Terms of Service</a>
+                <a href="/privacy">Privacy Policy</a>
+                <a href="mailto:support@japanalerts.com">Contact Support</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
